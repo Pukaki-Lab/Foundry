@@ -122,7 +122,10 @@ echo ""
 TUIST_TEMPLATES_DIR="${PROJECT_DIR}/Tuist/Templates"
 
 # Call the mciro feature template file
-bash "$CURRENT_DIR/Tuist-CLI/TuistBase/template-microFeature.sh" "$TUIST_TEMPLATES_DIR" "$minium_version"
+bash "$CURRENT_DIR/Tuist-CLI/TuistBase/template-microServiceFeature.sh" "$TUIST_TEMPLATES_DIR" "$minium_version"
+
+# Call the mono feature template file
+bash "$CURRENT_DIR/Tuist-CLI/TuistBase/template-monoFeature.sh" "$TUIST_TEMPLATES_DIR" "$minium_version"
 
 # Call the staticLibrary template file
 bash "$CURRENT_DIR/Tuist-CLI/TuistBase/teamplate-staticLibrary.sh" "$TUIST_TEMPLATES_DIR" "$minium_version"

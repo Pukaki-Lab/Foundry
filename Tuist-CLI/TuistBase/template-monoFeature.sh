@@ -1,5 +1,3 @@
-set -e
-
 TEMPLATES_DIR=$1
 minimumVersion=$2
 
@@ -13,12 +11,12 @@ if [ -z "$minimumVersion" ]; then
     exit 1
 fi
 
-mkdir -p "${TEMPLATES_DIR}/microFeature"
+mkdir -p "${TEMPLATES_DIR}/monoFeature"
 
-# Generate the MicroFeature template
-echo "📄 Creating microFeature.swift file..."
+# Generate the MonoFeature template
+echo "📄 Creating monoFeature.swift file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/microFeature/microFeature.swift"
+cat <<EOF > "${TEMPLATES_DIR}/monoFeature/monoFeature.swift"
 import ProjectDescription
 
 fileprivate let nameAttribute: Template.Attribute = .required("name")
@@ -28,7 +26,7 @@ fileprivate let year: Template.Attribute = .required("year")
 fileprivate let organization: Template.Attribute = .required("organization")
 
 fileprivate let template = Template(
-    description: "Micro Architecture Feature",
+    description: "Mono Architecture Feature",
     attributes: [
         nameAttribute,
         dateAttrribute,
@@ -54,16 +52,8 @@ fileprivate let template = Template(
             templatePath: "Tests.stencil"
         ),
         .file(
-            path: "\(nameAttribute)/Testing/\(nameAttribute)Testing.swift",
-            templatePath: "Testing.stencil"
-        ),
-        .file(
             path: "\(nameAttribute)/Sources/\(nameAttribute).swift",
             templatePath: "Sources.stencil"
-        ),
-        .file(
-            path: "\(nameAttribute)/Interface/\(nameAttribute)Interface.swift",
-            templatePath: "Interface.stencil"
         ),
         .file(
             path: "\(nameAttribute)/Resources/ResourceSample.json",
@@ -73,14 +63,14 @@ fileprivate let template = Template(
 )
 EOF
 
-# Generate the MicroFeature template
+# Generate the MonoFeature template
 echo "📄 Creating Project.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/microFeature/Project.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/monoFeature/Project.stencil"
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.microFeature(
+fileprivate let project = Project.monoFeature(
     name: "{{ name }}",
     settings: .settings(configurations: [
         .debug(name: .debug),
@@ -119,7 +109,7 @@ EOF
 # Generate the App stencil
 echo "📄 Creating App.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/microFeature/App.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/monoFeature/App.stencil"
 //
 //  {{ name }}Sample.swift
 //  {{ name }}
@@ -152,7 +142,7 @@ EOF
 # Generate the AppDelegate stencil
 echo "📄 Creating AppDelegate.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/microFeature/AppDelegate.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/monoFeature/AppDelegate.stencil"
 //
 //  AppDelegate.swift
 //  {{ name }}
@@ -176,27 +166,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, ObservableObject {
 }
 EOF
 
-# Generate the Interface stencil
-echo "📄 Creating Interface.stencil file..."
-
-cat <<EOF > "${TEMPLATES_DIR}/microFeature/Interface.stencil"
-//
-//  {{ name }}Interface.swift
-//  {{ name }}
-//
-//  Created by {{ author }} on {{ date }}.
-//  Copyright © {{ year }} {{ organization }} All rights reserved.
-//
-
-import Foundation
-
-public protocol {{ name }}Interface { }
-EOF
-
 # Generate the Sources stencil
 echo "📄 Creating Sources.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/microFeature/Sources.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/monoFeature/Sources.stencil"
 //
 //  {{ name }}.swift
 //  {{ name }}
@@ -214,33 +187,9 @@ public final class {{ name }} {
 EOF
 
 # Generate the Testing stencil
-echo "📄 Creating Testing.stencil file..."
-
-cat <<EOF > "${TEMPLATES_DIR}/microFeature/Testing.stencil"
-//
-//  {{ name }}Testing.swift
-//  {{ name }}
-//
-//  Created by {{ author }} on {{ date }}.
-//  Copyright © {{ year }} {{ organization }} All rights reserved.
-//
-
-import Foundation
-
-public final class {{ name }}Testing {
-
-    public init() { }
-
-    public func someMock() -> [String] {
-        return []
-    }
-}
-EOF
-
-# Generate the Testing stencil
 echo "📄 Creating Tests.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/microFeature/Tests.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/monoFeature/Tests.stencil"
 //
 //  {{ name }}Tests.swift
 //  {{ name }}
@@ -263,12 +212,12 @@ EOF
 # Generate the Resources stencil
 echo "📄 Creating Resources.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/microFeature/Resources.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/monoFeature/Resources.stencil"
 {
     "exampleKey": "exampleValue"
 }
 EOF
 
-echo "✅ MicroFeature templates created successfully"
+echo "✅ MonoFeature templates created successfully"
 echo ""
 

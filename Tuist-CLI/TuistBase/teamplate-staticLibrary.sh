@@ -63,7 +63,7 @@ cat <<EOF > "${TEMPLATES_DIR}/staticLibrary/Project.stencil"
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.staticLibrary(
+fileprivate let project = Project.staticLibrary(
     name: "{{ name }}",
     settings: .settings(configurations: [
         .debug(name: .debug),

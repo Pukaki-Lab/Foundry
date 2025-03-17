@@ -31,7 +31,7 @@ echo "📄 Creating Workspace.swift file..."
 cat <<EOF > "$HELPERS_DIR/Workspace.swift"
 import ProjectDescription
 
-let workspace = Workspace(
+fileprivate let workspace = Workspace(
     name: "${WORKSPACE_NAME}",
     projects: [
         "Shared/**",

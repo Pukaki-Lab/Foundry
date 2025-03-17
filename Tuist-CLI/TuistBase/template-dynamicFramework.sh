@@ -68,7 +68,7 @@ cat <<EOF > "${TEMPLATES_DIR}/dynamicFramework/Project.stencil"
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.dynamicFramework(
+fileprivate let project = Project.dynamicFramework(
     name: "{{ name }}",
     settings: .settings(configurations: [
         .debug(name: .debug),

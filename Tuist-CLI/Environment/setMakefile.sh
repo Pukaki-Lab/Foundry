@@ -23,9 +23,14 @@ ORG := ${TEAM}
 
 PROJECT_DIR := \$(shell pwd)
 
-define scaffold_micro_feature
-	@echo "🚀 Generating MicroFeature: \$(1)"
-	tuist scaffold microFeature --name \$(1) --date \$(shell date +"%-m/%-d/%y") --author "\$(AUTHOR)" --year "\$(YEAR)" --organization "\$(ORG)"
+define scaffold_microService_feature
+	@echo "🚀 Generating MicroServiceFeature: \$(1)"
+	tuist scaffold microServiceFeature --name \$(1) --date \$(shell date +"%-m/%-d/%y") --author "\$(AUTHOR)" --year "\$(YEAR)" --organization "\$(ORG)"
+endef
+
+define scaffold_mono_feature
+	@echo "🚀 Generating MonoFeature: \$(1)"
+	tuist scaffold monoFeature --name \$(1) --date \$(shell date +"%-m/%-d/%y") --author "\$(AUTHOR)" --year "\$(YEAR)" --organization "\$(ORG)"
 endef
 
 define scaffold_framework
@@ -43,14 +48,23 @@ define scaffold_executable
 	tuist scaffold executable --name \$(1) --date \$(shell date +"%-m/%-d/%y") --author "\$(AUTHOR)" --year "\$(YEAR)" --organization "\$(ORG)"
 endef
 
-.PHONY: micro_feature
-micro_feature:
+.PHONY: microService_feature
+microService_feature:
 	@if [ -z "\$(name)" ]; then \\
-		echo "❌ Please provide a feature name. Usage: make micro_feature name=FeatureName"; \\
+		echo "❌ Please provide a feature name. Usage: make microService_feature name=FeatureName"; \\
 		exit 1; \\
 	fi
-	\$(call scaffold_micro_feature,\$(name))
-	@echo "✅ Successfully created microFeature: \$(name)"
+	\$(call scaffold_microService_feature,\$(name))
+	@echo "✅ Successfully created microServiceFeature: \$(name)"
+
+.PHONY: mono_feature
+mono_feature:
+	@if [ -z "\$(name)" ]; then \\
+		echo "❌ Please provide a feature name. Usage: make mono_feature name=FeatureName"; \\
+		exit 1; \\
+	fi
+	\$(call scaffold_mono_feature,\$(name))
+	@echo "✅ Successfully created monoFeature: \$(name)"
 
 .PHONY: framework
 framework:
@@ -110,9 +124,9 @@ app:
 	@echo "✅ Created and moved \$(name)Data"
 
 	# 기본 Feature 생성 및 이동
-	@make micro_feature name=Default
-	@mv -f "Default" "\$(PROJECT_DIR)/\$(name)/Features/"
-	@echo "✅ Created and moved SampleFeature"
+	@make microService_feature name=DefaultFeature
+	@mv -f "DefaultFeature" "\$(PROJECT_DIR)/\$(name)/Features/"
+	@echo "✅ Created and moved DefaultFeature"
 
 	@echo "✅ All features and frameworks successfully created in \$(PROJECT_DIR)!"
 

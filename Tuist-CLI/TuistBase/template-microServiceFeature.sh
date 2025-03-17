@@ -13,12 +13,12 @@ if [ -z "$minimumVersion" ]; then
     exit 1
 fi
 
-mkdir -p "${TEMPLATES_DIR}/executable"
+mkdir -p "${TEMPLATES_DIR}/microServiceFeature"
 
-# Generate the Executable template
-echo "📄 Creating executable.swift file..."
+# Generate the MicroServiceFeature template
+echo "📄 Creating microServiceFeature.swift file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/executable/executable.swift"
+cat <<EOF > "${TEMPLATES_DIR}/microServiceFeature/microServiceFeature.swift"
 import ProjectDescription
 
 fileprivate let nameAttribute: Template.Attribute = .required("name")
@@ -28,7 +28,7 @@ fileprivate let year: Template.Attribute = .required("year")
 fileprivate let organization: Template.Attribute = .required("organization")
 
 fileprivate let template = Template(
-    description: "Micro Architecture Feature",
+    description: "Micro Service Architecture Feature",
     attributes: [
         nameAttribute,
         dateAttrribute,
@@ -38,43 +38,57 @@ fileprivate let template = Template(
     ],
     items: [
         .file(
-            path: "\(nameAttribute)App/Project.swift",
+            path: "\(nameAttribute)/Project.swift",
             templatePath: "Project.stencil"
         ),
         .file(
-            path: "\(nameAttribute)App/Sources/\(nameAttribute)App.swift",
+            path: "\(nameAttribute)/Sample/\(nameAttribute)Sample.swift",
             templatePath: "App.stencil"
         ),
         .file(
-            path: "\(nameAttribute)App/Sources/AppDelegate.swift",
+            path: "\(nameAttribute)/Sample/AppDelegate.swift",
             templatePath: "AppDelegate.stencil"
         ),
         .file(
-            path: "\(nameAttribute)App/Tests/\(nameAttribute)Tests.swift",
+            path: "\(nameAttribute)/Tests/\(nameAttribute)Tests.swift",
             templatePath: "Tests.stencil"
         ),
         .file(
-            path: "\(nameAttribute)App/Resources/ResourceSample.json",
+            path: "\(nameAttribute)/Testing/\(nameAttribute)Testing.swift",
+            templatePath: "Testing.stencil"
+        ),
+        .file(
+            path: "\(nameAttribute)/Sources/\(nameAttribute).swift",
+            templatePath: "Sources.stencil"
+        ),
+        .file(
+            path: "\(nameAttribute)/Interface/\(nameAttribute)Interface.swift",
+            templatePath: "Interface.stencil"
+        ),
+        .file(
+            path: "\(nameAttribute)/Resources/ResourceSample.json",
             templatePath: "Resources.stencil"
         )
     ]
 )
 EOF
 
-# Generate the Executable template
+# Generate the MicroServiceFeature template
 echo "📄 Creating Project.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/executable/Project.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/microServiceFeature/Project.stencil"
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-fileprivate let project = Project.executable(
+fileprivate let project = Project.microServiceFeature(
     name: "{{ name }}",
-    settings: .settings(configurations: [
-        .debug(name: .debug),
-        .debug(name: "Stage"),
-        .release(name: .release)
-    ]),
+    settings: .settings(
+        configurations: [
+            .debug(name: .debug),
+            .debug(name: "Stage"),
+            .release(name: .release)
+        ]
+    ),
     destinations: .iOS,
     targets: .iOS("${minimumVersion}"),
     dependencies: [],
@@ -89,22 +103,16 @@ fileprivate let project = Project.executable(
     ],
     schemes: [
         .scheme(
-            name: "{{ name }}App-Debug",
+            name: "{{ name }}Sample",
             shared: true,
-            buildAction: .buildAction(targets: ["{{ name }}App"]),
+            buildAction: .buildAction(targets: ["{{ name }}Sample"]),
             runAction: .runAction(configuration: .debug)
         ),
         .scheme(
-            name: "{{ name }}App-Stage",
+            name: "{{ name }}",
             shared: true,
-            buildAction: .buildAction(targets: ["{{ name }}App"]),
-            runAction: .runAction(configuration: "Stage")
-        ),
-        .scheme(
-            name: "{{ name }}App-Release",
-            shared: true,
-            buildAction: .buildAction(targets: ["{{ name }}App"]),
-            runAction: .runAction(configuration: .release)
+            buildAction: .buildAction(targets: ["{{ name }}"]),
+            runAction: .runAction(configuration: .debug)
         )
     ]
 )
@@ -113,10 +121,10 @@ EOF
 # Generate the App stencil
 echo "📄 Creating App.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/executable/App.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/microServiceFeature/App.stencil"
 //
-//  {{ name }}App.swift
-//  {{ name }}App
+//  {{ name }}Sample.swift
+//  {{ name }}
 //
 //  Created by {{ author }} on {{ date }}.
 //  Copyright © {{ year }} {{ organization }} All rights reserved.
@@ -125,7 +133,7 @@ cat <<EOF > "${TEMPLATES_DIR}/executable/App.stencil"
 import SwiftUI
 
 @main
-struct {{ name }}App: App {
+struct {{ name }}Sample: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
     var body: some Scene {
@@ -146,10 +154,10 @@ EOF
 # Generate the AppDelegate stencil
 echo "📄 Creating AppDelegate.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/executable/AppDelegate.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/microServiceFeature/AppDelegate.stencil"
 //
 //  AppDelegate.swift
-//  {{ name }}App
+//  {{ name }}
 //
 //  Created by {{ author }} on {{ date }}.
 //  Copyright © {{ year }} {{ organization }} All rights reserved.
@@ -170,13 +178,74 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, ObservableObject {
 }
 EOF
 
+# Generate the Interface stencil
+echo "📄 Creating Interface.stencil file..."
+
+cat <<EOF > "${TEMPLATES_DIR}/microServiceFeature/Interface.stencil"
+//
+//  {{ name }}Interface.swift
+//  {{ name }}
+//
+//  Created by {{ author }} on {{ date }}.
+//  Copyright © {{ year }} {{ organization }} All rights reserved.
+//
+
+import Foundation
+
+public protocol {{ name }}Interface { }
+EOF
+
+# Generate the Sources stencil
+echo "📄 Creating Sources.stencil file..."
+
+cat <<EOF > "${TEMPLATES_DIR}/microServiceFeature/Sources.stencil"
+//
+//  {{ name }}.swift
+//  {{ name }}
+//
+//  Created by {{ author }} on {{ date }}.
+//  Copyright © {{ year }} {{ organization }} All rights reserved.
+//
+
+import Foundation
+
+public final class {{ name }} {
+
+    public init() { }
+}
+EOF
+
+# Generate the Testing stencil
+echo "📄 Creating Testing.stencil file..."
+
+cat <<EOF > "${TEMPLATES_DIR}/microServiceFeature/Testing.stencil"
+//
+//  {{ name }}Testing.swift
+//  {{ name }}
+//
+//  Created by {{ author }} on {{ date }}.
+//  Copyright © {{ year }} {{ organization }} All rights reserved.
+//
+
+import Foundation
+
+public final class {{ name }}Testing {
+
+    public init() { }
+
+    public func someMock() -> [String] {
+        return []
+    }
+}
+EOF
+
 # Generate the Testing stencil
 echo "📄 Creating Tests.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/executable/Tests.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/microServiceFeature/Tests.stencil"
 //
 //  {{ name }}Tests.swift
-//  {{ name }}App
+//  {{ name }}
 //
 //  Created by {{ author }} on {{ date }}.
 //  Copyright © {{ year }} {{ organization }} All rights reserved.
@@ -196,11 +265,12 @@ EOF
 # Generate the Resources stencil
 echo "📄 Creating Resources.stencil file..."
 
-cat <<EOF > "${TEMPLATES_DIR}/executable/Resources.stencil"
+cat <<EOF > "${TEMPLATES_DIR}/microServiceFeature/Resources.stencil"
 {
     "exampleKey": "exampleValue"
 }
 EOF
 
-echo "✅ Executable templates created successfully"
+echo "✅ MicroServiceFeature templates created successfully"
 echo ""
+

@@ -54,7 +54,8 @@ You can extend your workspace by adding different components using `make` comman
 make framework name=MyFramework
 make library name=MyLibrary
 make app name=MyApp
-make micro_feature name=MyFeature
+make microService_feature name=MyFeature
+make mono_feature name=MyFeature
 ```
 
 <br><br>

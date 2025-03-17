@@ -136,13 +136,13 @@ echo "✅ Project+StaticLibrary.swift file created successfully"
 echo "$HELPERS_DIR/Project+StaticLibrary.swift"
 echo ""
 
-# Generate the MicroFeature helper
-echo "📄 Creating Project+MicroFeature.swift file..."
-cat <<EOF > "$HELPERS_DIR/Project+MicroFeature.swift"
+# Generate the MicroServiceFeature helper
+echo "📄 Creating Project+MicroServiceFeature.swift file..."
+cat <<EOF > "$HELPERS_DIR/Project+MicroServiceFeature.swift"
 import ProjectDescription
 
 extension Project {
-    public static func microFeature(
+    public static func microServiceFeature(
         name: String,
         settings: Settings? = nil,
         destinations: Destinations,
@@ -223,9 +223,70 @@ extension Project {
 }
 EOF
 
-echo "✅ Project+MicroFeature.swift file created successfully"
-echo "$HELPERS_DIR/Project+MicroFeature.swift"
+echo "✅ Project+MicroServiceFeature.swift file created successfully"
+echo "$HELPERS_DIR/Project+MicroServiceFeature.swift"
 echo ""
+
+# Generate the MonoFeature helper
+echo "📄 Creating Project+MonoFeature.swift file..."
+cat <<EOF > "$HELPERS_DIR/Project+MonoFeature.swift"
+import ProjectDescription
+
+extension Project {
+    public static func monoFeature(
+        name: String,
+        settings: Settings? = nil,
+        destinations: Destinations,
+        targets: DeploymentTargets,
+        dependencies: [TargetDependency],
+        infoPlist: [String: Plist.Value],
+        schemes: [Scheme] = []
+    ) -> Project {
+        return Project(
+            name: "\(name)",
+            organizationName: "${ID}",
+            settings: settings,
+            targets: [
+                .target(
+                    name: "\(name)Sample",
+                    destinations: destinations,
+                    product: .app,
+                    bundleId: "${ID}.\(name)Sample",
+                    deploymentTargets: targets,
+                    infoPlist: .extendingDefault(with: infoPlist),
+                    sources: ["Sample/**"],
+                    dependencies: [
+                        .target(name: "\(name)")
+                    ]
+                ),
+                .target(
+                    name: "\(name)Tests",
+                    destinations: destinations,
+                    product: .unitTests,
+                    bundleId: "${ID}.\(name)Tests",
+                    deploymentTargets: targets,
+                    infoPlist: .default,
+                    sources: ["Tests/**"],
+                    dependencies: [
+                        .target(name: "\(name)")
+                    ]
+                ),
+                .target(
+                    name: "\(name)",
+                    destinations: destinations,
+                    product: .framework,
+                    bundleId: "${ID}.\(name)",
+                    deploymentTargets: targets,
+                    infoPlist: .default,
+                    sources: ["Sources/**"],
+                    dependencies: dependencies
+                )
+            ],
+            schemes: schemes
+        )
+    }
+}
+EOF
 
 # Generate the Executable helper
 echo "📄 Creating Project+Executable.swift file..."
