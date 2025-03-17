@@ -127,6 +127,9 @@ bash "$CURRENT_DIR/Tuist-CLI/TuistBase/template-microServiceFeature.sh" "$TUIST_
 # Call the mono feature template file
 bash "$CURRENT_DIR/Tuist-CLI/TuistBase/template-monoFeature.sh" "$TUIST_TEMPLATES_DIR" "$minium_version"
 
+# Call the clean feature template file
+bash "$CURRENT_DIR/Tuist-CLI/TuistBase/template-cleanFeature.sh" "$TUIST_TEMPLATES_DIR" "$minium_version"
+
 # Call the staticLibrary template file
 bash "$CURRENT_DIR/Tuist-CLI/TuistBase/teamplate-staticLibrary.sh" "$TUIST_TEMPLATES_DIR" "$minium_version"
 

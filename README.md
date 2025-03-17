@@ -56,6 +56,7 @@ make library name=MyLibrary
 make app name=MyApp
 make microService_feature name=MyFeature
 make mono_feature name=MyFeature
+make clean_feature name=MyFeature
 ```
 
 <br><br>

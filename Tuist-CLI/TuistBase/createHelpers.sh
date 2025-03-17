@@ -227,6 +227,99 @@ echo "✅ Project+MicroServiceFeature.swift file created successfully"
 echo "$HELPERS_DIR/Project+MicroServiceFeature.swift"
 echo ""
 
+# Generate the MicroServiceFeature helper
+echo "📄 Creating Project+CleanFeature.swift file..."
+cat <<EOF > "$HELPERS_DIR/Project+CleanFeature.swift"
+import ProjectDescription
+
+extension Project {
+    public static func cleanFeature(
+        name: String,
+        settings: Settings? = nil,
+        destinations: Destinations,
+        targets: DeploymentTargets,
+        dependencies: [TargetDependency],
+        infoPlist: [String: Plist.Value],
+        schemes: [Scheme] = []
+    ) -> Project {
+        return Project(
+            name: "\(name)",
+            organizationName: "${ID}",
+            settings: settings,
+            targets: [
+                .target(
+                    name: "\(name)Sample",
+                    destinations: destinations,
+                    product: .app,
+                    bundleId: "${ID}.\(name)Sample",
+                    deploymentTargets: targets,
+                    infoPlist: .extendingDefault(with: infoPlist),
+                    sources: ["Sample/**"],
+                    dependencies: [
+                        .target(name: "\(name)Presentation"),
+                        .target(name: "\(name)Data"),
+                        .target(name: "\(name)Domain"),
+                    ]
+                ),
+                .target(
+                    name: "\(name)Tests",
+                    destinations: destinations,
+                    product: .unitTests,
+                    bundleId: "${ID}.\(name)Tests",
+                    deploymentTargets: targets,
+                    infoPlist: .default,
+                    sources: ["Tests/**"],
+                    dependencies: [
+                        .target(name: "\(name)Presentation"),
+                        .target(name: "\(name)Data"),
+                        .target(name: "\(name)Domain"),
+                    ]
+                ),
+                .target(
+                    name: "\(name)Presentation",
+                    destinations: destinations,
+                    product: .framework,
+                    bundleId: "${ID}.\(name)Presentation",
+                    deploymentTargets: targets,
+                    infoPlist: .default,
+                    sources: ["Presentation/**"],
+                    dependencies: [
+                        .target(name: "\(name)Domain")
+                    ]
+                ),
+                .target(
+                    name: "\(name)Data",
+                    destinations: destinations,
+                    product: .framework,
+                    bundleId: "${ID}.\(name)Data",
+                    deploymentTargets: targets,
+                    infoPlist: .default,
+                    sources: ["Data/**"],
+                    dependencies: [
+                        .target(name: "\(name)Domain")
+                    ]
+                ),
+                .target(
+                    name: "\(name)Domain",
+                    destinations: destinations,
+                    product: .framework,
+                    bundleId: "${ID}.\(name)Domain",
+                    deploymentTargets: targets,
+                    infoPlist: .default,
+                    sources: ["Domain/**"],
+                    dependencies: dependencies
+                )
+            ],
+            schemes: schemes
+        )
+    }
+}
+EOF
+
+echo "✅ Project+CleanFeature.swift file created successfully"
+echo "$HELPERS_DIR/Project+CleanFeature.swift"
+echo ""
+
 # Generate the MonoFeature helper
 echo "📄 Creating Project+MonoFeature.swift file..."
 cat <<EOF > "$HELPERS_DIR/Project+MonoFeature.swift"

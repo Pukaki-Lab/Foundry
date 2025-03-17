@@ -33,6 +33,11 @@ define scaffold_mono_feature
 	tuist scaffold monoFeature --name \$(1) --date \$(shell date +"%-m/%-d/%y") --author "\$(AUTHOR)" --year "\$(YEAR)" --organization "\$(ORG)"
 endef
 
+define scaffold_clean_feature
+	@echo "🚀 Generating CleanFeature: \$(1)"
+	tuist scaffold cleanFeature --name \$(1) --date \$(shell date +"%-m/%-d/%y") --author "\$(AUTHOR)" --year "\$(YEAR)" --organization "\$(ORG)"
+endef
+
 define scaffold_framework
 	@echo "🚀 Generating framework: \$(1)"
 	tuist scaffold dynamicFramework --name \$(1) --date \$(shell date +"%-m/%-d/%y") --author "\$(AUTHOR)" --year "\$(YEAR)" --organization "\$(ORG)"
@@ -65,6 +70,15 @@ mono_feature:
 	fi
 	\$(call scaffold_mono_feature,\$(name))
 	@echo "✅ Successfully created monoFeature: \$(name)"
+
+.PHONY: clean_feature
+clean_feature:
+	@if [ -z "\$(name)" ]; then \\
+		echo "❌ Please provide a feature name. Usage: make clean_feature name=FeatureName"; \\
+		exit 1; \\
+	fi
+	\$(call scaffold_clean_feature,\$(name))
+	@echo "✅ Successfully created cleanFeature: \$(name)"
 
 .PHONY: framework
 framework:
