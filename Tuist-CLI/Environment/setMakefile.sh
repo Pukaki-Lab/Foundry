@@ -111,7 +111,7 @@ app:
 
 	# 기본 Feature 생성 및 이동
 	@make micro_feature name=Default
-	@mv -f "DefaultFeature" "\$(PROJECT_DIR)/\$(name)/Features/"
+	@mv -f "Default" "\$(PROJECT_DIR)/\$(name)/Features/"
 	@echo "✅ Created and moved SampleFeature"
 
 	@echo "✅ All features and frameworks successfully created in \$(PROJECT_DIR)!"

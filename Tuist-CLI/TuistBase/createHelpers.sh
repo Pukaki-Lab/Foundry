@@ -152,7 +152,7 @@ extension Project {
         schemes: [Scheme] = []
     ) -> Project {
         return Project(
-            name: "\(name)Feature",
+            name: "\(name)",
             organizationName: "${ID}",
             settings: settings,
             targets: [

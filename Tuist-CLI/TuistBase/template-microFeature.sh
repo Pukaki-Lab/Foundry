@@ -38,35 +38,35 @@ fileprivate let template = Template(
     ],
     items: [
         .file(
-            path: "\(nameAttribute)Feature/Project.swift",
+            path: "\(nameAttribute)/Project.swift",
             templatePath: "Project.stencil"
         ),
         .file(
-            path: "\(nameAttribute)Feature/Sample/\(nameAttribute)Sample.swift",
+            path: "\(nameAttribute)/Sample/\(nameAttribute)Sample.swift",
             templatePath: "App.stencil"
         ),
         .file(
-            path: "\(nameAttribute)Feature/Sample/AppDelegate.swift",
+            path: "\(nameAttribute)/Sample/AppDelegate.swift",
             templatePath: "AppDelegate.stencil"
         ),
         .file(
-            path: "\(nameAttribute)Feature/Tests/\(nameAttribute)Tests.swift",
+            path: "\(nameAttribute)/Tests/\(nameAttribute)Tests.swift",
             templatePath: "Tests.stencil"
         ),
         .file(
-            path: "\(nameAttribute)Feature/Testing/\(nameAttribute)Testing.swift",
+            path: "\(nameAttribute)/Testing/\(nameAttribute)Testing.swift",
             templatePath: "Testing.stencil"
         ),
         .file(
-            path: "\(nameAttribute)Feature/Sources/\(nameAttribute).swift",
+            path: "\(nameAttribute)/Sources/\(nameAttribute).swift",
             templatePath: "Sources.stencil"
         ),
         .file(
-            path: "\(nameAttribute)Feature/Interface/\(nameAttribute)Interface.swift",
+            path: "\(nameAttribute)/Interface/\(nameAttribute)Interface.swift",
             templatePath: "Interface.stencil"
         ),
         .file(
-            path: "\(nameAttribute)Feature/Resources/ResourceSample.json",
+            path: "\(nameAttribute)/Resources/ResourceSample.json",
             templatePath: "Resources.stencil"
         )
     ]
@@ -122,7 +122,7 @@ echo "📄 Creating App.stencil file..."
 cat <<EOF > "${TEMPLATES_DIR}/microFeature/App.stencil"
 //
 //  {{ name }}Sample.swift
-//  {{ name }}Feature
+//  {{ name }}
 //
 //  Created by {{ author }} on {{ date }}.
 //  Copyright © {{ year }} {{ organization }} All rights reserved.
@@ -155,7 +155,7 @@ echo "📄 Creating AppDelegate.stencil file..."
 cat <<EOF > "${TEMPLATES_DIR}/microFeature/AppDelegate.stencil"
 //
 //  AppDelegate.swift
-//  {{ name }}Feature
+//  {{ name }}
 //
 //  Created by {{ author }} on {{ date }}.
 //  Copyright © {{ year }} {{ organization }} All rights reserved.
@@ -182,7 +182,7 @@ echo "📄 Creating Interface.stencil file..."
 cat <<EOF > "${TEMPLATES_DIR}/microFeature/Interface.stencil"
 //
 //  {{ name }}Interface.swift
-//  {{ name }}Feature
+//  {{ name }}
 //
 //  Created by {{ author }} on {{ date }}.
 //  Copyright © {{ year }} {{ organization }} All rights reserved.
@@ -199,7 +199,7 @@ echo "📄 Creating Sources.stencil file..."
 cat <<EOF > "${TEMPLATES_DIR}/microFeature/Sources.stencil"
 //
 //  {{ name }}.swift
-//  {{ name }}Feature
+//  {{ name }}
 //
 //  Created by {{ author }} on {{ date }}.
 //  Copyright © {{ year }} {{ organization }} All rights reserved.
@@ -219,7 +219,7 @@ echo "📄 Creating Testing.stencil file..."
 cat <<EOF > "${TEMPLATES_DIR}/microFeature/Testing.stencil"
 //
 //  {{ name }}Testing.swift
-//  {{ name }}Feature
+//  {{ name }}
 //
 //  Created by {{ author }} on {{ date }}.
 //  Copyright © {{ year }} {{ organization }} All rights reserved.
@@ -243,7 +243,7 @@ echo "📄 Creating Tests.stencil file..."
 cat <<EOF > "${TEMPLATES_DIR}/microFeature/Tests.stencil"
 //
 //  {{ name }}Tests.swift
-//  {{ name }}Feature
+//  {{ name }}
 //
 //  Created by {{ author }} on {{ date }}.
 //  Copyright © {{ year }} {{ organization }} All rights reserved.
