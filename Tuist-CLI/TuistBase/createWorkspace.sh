@@ -4,12 +4,12 @@
 set -e
 
 # Base path where files will be generated
-HELPERS_DIR=$1
+PROJECT_DIR=$1
 WORKSPACE_NAME=$2
 TEAM_NAME=$3
 APP_NAME=$4
 
-if [ -z "$HELPERS_DIR" ]; then
+if [ -z "$PROJECT_DIR" ]; then
     echo "❌ You must provide a directory path for file creation."
     exit 1
 fi
@@ -28,8 +28,8 @@ GIT_USER_NAME=$(git config user.name)
 
 # Generate the Workspace
 echo "📄 Creating Workspace.swift file..."
-cat <<EOF > "$HELPERS_DIR/Workspace.swift"
-import ProjectDescription
+cat <<EOF > "$PROJECT_DIR/Workspace.swift"
+import ProjectDescription 
 
 fileprivate let workspace = Workspace(
     name: "${WORKSPACE_NAME}",
@@ -55,5 +55,5 @@ fileprivate let workspace = Workspace(
 EOF
 
 echo "✅ Workspace.swift file created successfully"
-echo "$HELPERS_DIR/Workspace.swift"
+echo "$PROJECT_DIR/Workspace.swift"
 echo ""

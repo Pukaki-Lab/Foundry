@@ -99,6 +99,10 @@ mkdir -p "$PROJECT_DIR/Tuist"
 echo ""
 echo ""
 
+# Set gitingore file
+echo "📄 Creating .gitignore file..."
+bash "$CURRENT_DIR/Tuist-CLI/Environment/setGitignore.sh" "$PROJECT_DIR"
+
 # Call the helper file creation script
 TUIST_DIR="${PROJECT_DIR}/Tuist"
 bash "$CURRENT_DIR/Tuist-CLI/TuistBase/createWorkspace.sh" "$PROJECT_DIR" "$workspace_name" "$team_name" "$app_name"
